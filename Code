@@ -1,0 +1,100 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Book {
+public:
+    int id;
+    string title;
+    string author;
+
+    Book(int i, string t, string a) {
+        id = i;
+        title = t;
+        author = a;
+    }
+};
+
+int main() {
+    vector<Book> library;
+    int choice;
+
+    do {
+        cout << "\n===== Library Management System =====\n";
+        cout << "1. Add Book\n";
+        cout << "2. View Books\n";
+        cout << "3. Search Book\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch(choice) {
+            case 1: {
+                int id;
+                string title, author;
+
+                cout << "Enter Book ID: ";
+                cin >> id;
+                cin.ignore();
+
+                cout << "Enter Book Title: ";
+                getline(cin, title);
+
+                cout << "Enter Author Name: ";
+                getline(cin, author);
+
+                library.push_back(Book(id, title, author));
+                cout << "Book added successfully!\n";
+                break;
+            }
+
+            case 2: {
+                if (library.empty()) {
+                    cout << "No books available.\n";
+                } else {
+                    cout << "\n--- Book List ---\n";
+                    for (auto &book : library) {
+                        cout << "ID: " << book.id
+                             << "\nTitle: " << book.title
+                             << "\nAuthor: " << book.author
+                             << "\n-----------------\n";
+                    }
+                }
+                break;
+            }
+
+            case 3: {
+                int searchId;
+                bool found = false;
+
+                cout << "Enter Book ID to search: ";
+                cin >> searchId;
+
+                for (auto &book : library) {
+                    if (book.id == searchId) {
+                        cout << "\nBook Found!\n";
+                        cout << "Title: " << book.title << endl;
+                        cout << "Author: " << book.author << endl;
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    cout << "Book not found.\n";
+                }
+                break;
+            }
+
+            case 4:
+                cout << "Exiting program...\n";
+                break;
+
+            default:
+                cout << "Invalid choice!\n";
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
